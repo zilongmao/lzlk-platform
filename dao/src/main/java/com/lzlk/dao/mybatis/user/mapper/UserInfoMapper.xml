@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzlk.dao.mybatis.user.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lzlk.dao.mybatis.user.bean.UserInfoDo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="official_account_open_id" jdbcType="VARCHAR" property="officialAccountOpenId" />
+    <result column="applet_open_id" jdbcType="VARCHAR" property="appletOpenId" />
+    <result column="we_chat_union_id" jdbcType="VARCHAR" property="weChatUnionId" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="head_image_max" jdbcType="VARCHAR" property="headImageMax" />
+    <result column="head_image_min" jdbcType="VARCHAR" property="headImageMin" />
+    <result column="phone_number" jdbcType="BIGINT" property="phoneNumber" />
+    <result column="other1" jdbcType="INTEGER" property="other1" />
+    <result column="other2" jdbcType="INTEGER" property="other2" />
+    <result column="other3" jdbcType="VARCHAR" property="other3" />
+    <result column="other4" jdbcType="VARCHAR" property="other4" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, last_modify_time, is_delete, nickname, official_account_open_id, 
+    applet_open_id, we_chat_union_id, sex, head_image_max, head_image_min, phone_number, 
+    other1, other2, other3, other4
+  </sql>
+  <select id="selectByExample" parameterType="com.lzlk.dao.mybatis.user.bean.UserInfoDoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lzlk.dao.mybatis.user.bean.UserInfoDoExample">
+    delete from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lzlk.dao.mybatis.user.bean.UserInfoDo" useGeneratedKeys="true">
+    insert into user_info (id, create_time, last_modify_time, is_delete,
+      nickname, official_account_open_id, applet_open_id, 
+      we_chat_union_id, sex, head_image_max, 
+      head_image_min, phone_number, other1, 
+      other2, other3, other4
+      )
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT},
+      #{nickname,jdbcType=VARCHAR}, #{officialAccountOpenId,jdbcType=VARCHAR}, #{appletOpenId,jdbcType=VARCHAR}, 
+      #{weChatUnionId,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{headImageMax,jdbcType=VARCHAR}, 
+      #{headImageMin,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=BIGINT}, #{other1,jdbcType=INTEGER}, 
+      #{other2,jdbcType=INTEGER}, #{other3,jdbcType=VARCHAR}, #{other4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lzlk.dao.mybatis.user.bean.UserInfoDo" useGeneratedKeys="true">
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="officialAccountOpenId != null">
+        official_account_open_id,
+      </if>
+      <if test="appletOpenId != null">
+        applet_open_id,
+      </if>
+      <if test="weChatUnionId != null">
+        we_chat_union_id,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="headImageMax != null">
+        head_image_max,
+      </if>
+      <if test="headImageMin != null">
+        head_image_min,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="other1 != null">
+        other1,
+      </if>
+      <if test="other2 != null">
+        other2,
+      </if>
+      <if test="other3 != null">
+        other3,
+      </if>
+      <if test="other4 != null">
+        other4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="officialAccountOpenId != null">
+        #{officialAccountOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="appletOpenId != null">
+        #{appletOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="weChatUnionId != null">
+        #{weChatUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="headImageMax != null">
+        #{headImageMax,jdbcType=VARCHAR},
+      </if>
+      <if test="headImageMin != null">
+        #{headImageMin,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=BIGINT},
+      </if>
+      <if test="other1 != null">
+        #{other1,jdbcType=INTEGER},
+      </if>
+      <if test="other2 != null">
+        #{other2,jdbcType=INTEGER},
+      </if>
+      <if test="other3 != null">
+        #{other3,jdbcType=VARCHAR},
+      </if>
+      <if test="other4 != null">
+        #{other4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lzlk.dao.mybatis.user.bean.UserInfoDoExample" resultType="java.lang.Long">
+    select count(*) from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastModifyTime != null">
+        last_modify_time = #{record.lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officialAccountOpenId != null">
+        official_account_open_id = #{record.officialAccountOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appletOpenId != null">
+        applet_open_id = #{record.appletOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weChatUnionId != null">
+        we_chat_union_id = #{record.weChatUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.headImageMax != null">
+        head_image_max = #{record.headImageMax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headImageMin != null">
+        head_image_min = #{record.headImageMin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null">
+        phone_number = #{record.phoneNumber,jdbcType=BIGINT},
+      </if>
+      <if test="record.other1 != null">
+        other1 = #{record.other1,jdbcType=INTEGER},
+      </if>
+      <if test="record.other2 != null">
+        other2 = #{record.other2,jdbcType=INTEGER},
+      </if>
+      <if test="record.other3 != null">
+        other3 = #{record.other3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.other4 != null">
+        other4 = #{record.other4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_info
+    set id = #{record.id,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{record.lastModifyTime,jdbcType=TIMESTAMP},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      official_account_open_id = #{record.officialAccountOpenId,jdbcType=VARCHAR},
+      applet_open_id = #{record.appletOpenId,jdbcType=VARCHAR},
+      we_chat_union_id = #{record.weChatUnionId,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      head_image_max = #{record.headImageMax,jdbcType=VARCHAR},
+      head_image_min = #{record.headImageMin,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=BIGINT},
+      other1 = #{record.other1,jdbcType=INTEGER},
+      other2 = #{record.other2,jdbcType=INTEGER},
+      other3 = #{record.other3,jdbcType=VARCHAR},
+      other4 = #{record.other4,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lzlk.dao.mybatis.user.bean.UserInfoDo">
+    update user_info
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="officialAccountOpenId != null">
+        official_account_open_id = #{officialAccountOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="appletOpenId != null">
+        applet_open_id = #{appletOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="weChatUnionId != null">
+        we_chat_union_id = #{weChatUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="headImageMax != null">
+        head_image_max = #{headImageMax,jdbcType=VARCHAR},
+      </if>
+      <if test="headImageMin != null">
+        head_image_min = #{headImageMin,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=BIGINT},
+      </if>
+      <if test="other1 != null">
+        other1 = #{other1,jdbcType=INTEGER},
+      </if>
+      <if test="other2 != null">
+        other2 = #{other2,jdbcType=INTEGER},
+      </if>
+      <if test="other3 != null">
+        other3 = #{other3,jdbcType=VARCHAR},
+      </if>
+      <if test="other4 != null">
+        other4 = #{other4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lzlk.dao.mybatis.user.bean.UserInfoDo">
+    update user_info
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      official_account_open_id = #{officialAccountOpenId,jdbcType=VARCHAR},
+      applet_open_id = #{appletOpenId,jdbcType=VARCHAR},
+      we_chat_union_id = #{weChatUnionId,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      head_image_max = #{headImageMax,jdbcType=VARCHAR},
+      head_image_min = #{headImageMin,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=BIGINT},
+      other1 = #{other1,jdbcType=INTEGER},
+      other2 = #{other2,jdbcType=INTEGER},
+      other3 = #{other3,jdbcType=VARCHAR},
+      other4 = #{other4,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzlk.dao.mybatis.payment.mapper.PaymentOrderMapper">
+  <resultMap id="BaseResultMap" type="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="merchant_id" jdbcType="VARCHAR" property="merchantId" />
+    <result column="merchant_order_number" jdbcType="VARCHAR" property="merchantOrderNumber" />
+    <result column="channel_id" jdbcType="VARCHAR" property="channelId" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="client_ip" jdbcType="VARCHAR" property="clientIp" />
+    <result column="device" jdbcType="VARCHAR" property="device" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_info" jdbcType="VARCHAR" property="goodsInfo" />
+    <result column="extra" jdbcType="VARCHAR" property="extra" />
+    <result column="err_code" jdbcType="VARCHAR" property="errCode" />
+    <result column="err_msg" jdbcType="VARCHAR" property="errMsg" />
+    <result column="notify_count" jdbcType="INTEGER" property="notifyCount" />
+    <result column="last_notify_time" jdbcType="TIMESTAMP" property="lastNotifyTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="success_time" jdbcType="TIMESTAMP" property="successTime" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="Param2" jdbcType="VARCHAR" property="param2" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, merchant_id, merchant_order_number, channel_id, amount, `status`, 
+    client_ip, device, goods_name, goods_info, extra, err_code, err_msg, notify_count, 
+    last_notify_time, expire_time, success_time, last_modify_time, transaction_id, Param2
+  </sql>
+  <select id="selectByExample" parameterType="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from payment_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from payment_order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from payment_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDoExample">
+    delete from payment_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDo" useGeneratedKeys="true">
+    insert into payment_order (create_time, merchant_id, merchant_order_number, 
+      channel_id, amount, `status`, 
+      client_ip, device, goods_name, 
+      goods_info, extra, err_code, 
+      err_msg, notify_count, last_notify_time, 
+      expire_time, success_time, last_modify_time, 
+      transaction_id, Param2)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=VARCHAR}, #{merchantOrderNumber,jdbcType=VARCHAR}, 
+      #{channelId,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{clientIp,jdbcType=VARCHAR}, #{device,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsInfo,jdbcType=VARCHAR}, #{extra,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, 
+      #{errMsg,jdbcType=VARCHAR}, #{notifyCount,jdbcType=INTEGER}, #{lastNotifyTime,jdbcType=TIMESTAMP}, 
+      #{expireTime,jdbcType=TIMESTAMP}, #{successTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}, 
+      #{transactionId,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDo" useGeneratedKeys="true">
+    insert into payment_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="merchantOrderNumber != null">
+        merchant_order_number,
+      </if>
+      <if test="channelId != null">
+        channel_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="clientIp != null">
+        client_ip,
+      </if>
+      <if test="device != null">
+        device,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsInfo != null">
+        goods_info,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="errCode != null">
+        err_code,
+      </if>
+      <if test="errMsg != null">
+        err_msg,
+      </if>
+      <if test="notifyCount != null">
+        notify_count,
+      </if>
+      <if test="lastNotifyTime != null">
+        last_notify_time,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="successTime != null">
+        success_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+      <if test="param2 != null">
+        Param2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantOrderNumber != null">
+        #{merchantOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="clientIp != null">
+        #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="device != null">
+        #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsInfo != null">
+        #{goodsInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null">
+        #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errMsg != null">
+        #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyCount != null">
+        #{notifyCount,jdbcType=INTEGER},
+      </if>
+      <if test="lastNotifyTime != null">
+        #{lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="successTime != null">
+        #{successTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDoExample" resultType="java.lang.Long">
+    select count(*) from payment_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update payment_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.merchantId != null">
+        merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantOrderNumber != null">
+        merchant_order_number = #{record.merchantOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelId != null">
+        channel_id = #{record.channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.clientIp != null">
+        client_ip = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.device != null">
+        device = #{record.device,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsInfo != null">
+        goods_info = #{record.goodsInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extra != null">
+        extra = #{record.extra,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errCode != null">
+        err_code = #{record.errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errMsg != null">
+        err_msg = #{record.errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyCount != null">
+        notify_count = #{record.notifyCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastNotifyTime != null">
+        last_notify_time = #{record.lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expireTime != null">
+        expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.successTime != null">
+        success_time = #{record.successTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastModifyTime != null">
+        last_modify_time = #{record.lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.transactionId != null">
+        transaction_id = #{record.transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param2 != null">
+        Param2 = #{record.param2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update payment_order
+    set id = #{record.id,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      merchant_order_number = #{record.merchantOrderNumber,jdbcType=VARCHAR},
+      channel_id = #{record.channelId,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=BIGINT},
+      `status` = #{record.status,jdbcType=INTEGER},
+      client_ip = #{record.clientIp,jdbcType=VARCHAR},
+      device = #{record.device,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_info = #{record.goodsInfo,jdbcType=VARCHAR},
+      extra = #{record.extra,jdbcType=VARCHAR},
+      err_code = #{record.errCode,jdbcType=VARCHAR},
+      err_msg = #{record.errMsg,jdbcType=VARCHAR},
+      notify_count = #{record.notifyCount,jdbcType=INTEGER},
+      last_notify_time = #{record.lastNotifyTime,jdbcType=TIMESTAMP},
+      expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+      success_time = #{record.successTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{record.lastModifyTime,jdbcType=TIMESTAMP},
+      transaction_id = #{record.transactionId,jdbcType=VARCHAR},
+      Param2 = #{record.param2,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDo">
+    update payment_order
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantOrderNumber != null">
+        merchant_order_number = #{merchantOrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="clientIp != null">
+        client_ip = #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="device != null">
+        device = #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsInfo != null">
+        goods_info = #{goodsInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null">
+        err_code = #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errMsg != null">
+        err_msg = #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyCount != null">
+        notify_count = #{notifyCount,jdbcType=INTEGER},
+      </if>
+      <if test="lastNotifyTime != null">
+        last_notify_time = #{lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="successTime != null">
+        success_time = #{successTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transactionId != null">
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        Param2 = #{param2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lzlk.dao.mybatis.payment.bean.PaymentOrderDo">
+    update payment_order
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      merchant_id = #{merchantId,jdbcType=VARCHAR},
+      merchant_order_number = #{merchantOrderNumber,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=INTEGER},
+      client_ip = #{clientIp,jdbcType=VARCHAR},
+      device = #{device,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_info = #{goodsInfo,jdbcType=VARCHAR},
+      extra = #{extra,jdbcType=VARCHAR},
+      err_code = #{errCode,jdbcType=VARCHAR},
+      err_msg = #{errMsg,jdbcType=VARCHAR},
+      notify_count = #{notifyCount,jdbcType=INTEGER},
+      last_notify_time = #{lastNotifyTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      success_time = #{successTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      Param2 = #{param2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
