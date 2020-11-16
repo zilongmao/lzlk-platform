@@ -4,6 +4,7 @@
 
 。Mac或者Linux下可以使用tree列出项目结构，如下图这种：
 
+```
 ├── build
 ├── config
 ├── docs
@@ -17,3 +18,4 @@
 │   │   └── modules
 │   └── views
 │       ├── book
+```
